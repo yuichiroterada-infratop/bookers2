@@ -1,2 +1,16 @@
 <h1>Books#index</h1>
-<p>Find me in app/views/books/index.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div><%= render "users/info", user: current_user %></div>
+      <div><%= render "books/form", book: @book %></div>
+    </div>
+    
+    <div class="col-md-8 offset-md-1">
+      <h2>Books</h2>
+      <%= render "books/index", books: @books %>
+        
+    </div>
+    
+  </div>
+</div>
