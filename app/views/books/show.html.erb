@@ -9,6 +9,7 @@
     <div class="col-md-8 offset-md-1">
       <!--以下投稿詳細画面-->
       <h2>Book detail</h2>
+      
       <table class="table">
         <tbody>
           <tr>
@@ -29,10 +30,53 @@
             <td><%= link_to "Edit", edit_book_path(@book), class: "btn btn-success btn-sm" %></td>
             <td><%= link_to "Destroy", book_path(@book), method: :delete, class: "btn btn-danger btn-sm", "data-confirm"=>"Are you sure?" %></td>
             <% end %>
+            
+            <% if @book.favorited_by?(current_user) %>
+              <td>
+                <%= link_to book_favorites_path(@book), method: :delete do %>
+                  <i class="fas fa-heart style="color: #ea542e;" "></i><%= @book.favorites.count %>いいね
+                <% end %>
+              </td>
+              
+            <% else %>
+              <td>
+                <%= link_to book_favorites_path(@book), method: :post do %>
+                  <i class="fas fa-heart"></i><%= @book.favorites.count %>いいね
+                <% end %>
+              </td>
+            <% end %>
           </tr>
         </tbody>
       </table>
       
+      <p>コメント件数：<%= @book.book_comments.count %></p>
+      <div class="form-group">
+        <%= form_with model: [@book, @book_comment] do |f| %>
+          <%= f.text_area :comment, rows: "2", placeholder: "Comment here" %></br>
+          <%= f.submit "Send", class: "btn btn-success btn-sm" %>
+        <% end %>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>ユーザー</th>
+            <th>コメント</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @book.book_comments.each do |comment| %>
+          <tr>
+            <td><%= image_tag comment.user.get_profile_image("50x50") %></td>
+            <td><%= comment.user.name %></td>
+            <td><%= comment.comment %></td>
+            <td><%= comment.created_at.strftime("%Y/%m/%d") %></td>
+          </tr>
+          <% end %>
+        </tbody>
+        
+      </table>
     </div>
     
   </div>

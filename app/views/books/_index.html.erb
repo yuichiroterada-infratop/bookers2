@@ -21,6 +21,8 @@
         <% end %>
       </th>
       <th><%= book.body %></th>
+      <th><%= book.favorites.count %> Likes</th>
+      <th><%= book.book_comments.count %> Comments</th>
     </tr>
     <% end %>
   </tbody>
