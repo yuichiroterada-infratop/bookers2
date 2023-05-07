@@ -76,7 +76,7 @@
             <td><%= comment.comment %></td>
             <td><%= comment.created_at.strftime("%Y/%m/%d") %></td>
             <% if comment.user == current_user %>
-              <td><%= link_to "削除", book_book_comment_path(comment.book, comment), method: :delete, class: "btn btn-secondary", "data-confirm"=>"Are you sure?" %></td>
+              <td><%= link_to "Destroy", book_book_comment_path(comment.book, comment), method: :delete, class: "btn btn-secondary", "data-confirm"=>"Are you sure?" %></td>
             <% end %>
           </tr>
           <% end %>
