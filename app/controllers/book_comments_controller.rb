@@ -4,14 +4,21 @@ class BookCommentsController < ApplicationController
     comment = BookComment.new(comment_params)
     comment.user = current_user
     comment.book = book
-    comment.save
-    redirect_to request.referer
+    if comment.save
+      flash[:notice] = "You have posted comment successfully!"
+      redirect_to request.referer
+    else
+      @book = Book.find(params[:book_id])
+      @user = @book.user
+      @new_book = Book.new
+      @book_comment = BookComment.new
+    end
   end
   
   def destroy
-    book = Book.find(params[:book_id])
-    
-    
+    BookComment.find(params[:id]).destroy
+    flash[:notice] = "You have destroyed comment successfully!"
+    redirect_to request.referer
   end
   
   private

@@ -21,7 +21,19 @@
         <% end %>
       </th>
       <th><%= book.body %></th>
-      <th><%= book.favorites.count %> Likes</th>
+      <% if book.favorited_by?(current_user) %>
+        <td>
+          <%= link_to book_favorites_path(book), method: :delete do %>
+            <i class="fas fa-heart style="color: #ea542e;" "></i><%= book.favorites.count %>いいね
+          <% end %>
+        </td>
+      <% else %>
+        <td>
+          <%= link_to book_favorites_path(book), method: :post do %>
+            <i class="fas fa-heart"></i><%= book.favorites.count %>いいね
+          <% end %>
+        </td>
+      <% end %>
       <th><%= book.book_comments.count %> Comments</th>
     </tr>
     <% end %>
